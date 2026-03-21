@@ -1,4 +1,3 @@
-//import { StatusBar } from 'expo-status-bar';
 import React, {useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
@@ -17,8 +16,6 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Hello Taylor!</Text>
-      {/*<StatusBar style="auto" />*/}
-      {/*<HeartBeat />*/}
       <Text>My beats so far are: {beat}</Text>
     </View>
   );

@@ -1,4 +1,5 @@
 import React, {useState, useEffect } from 'react';
+import * as Haptics from 'expo-haptics';
 
 // red if above 100 OR below 60;
 // checkbox for "are athelte?" - true=>diff const bmpMinAth used
@@ -8,7 +9,7 @@ import React, {useState, useEffect } from 'react';
 const bpmMin = 35
 const bmpMax = 195
 
-function getRandomBMP(min: number, max: number){ //cannot declare as int, all integers are "numbers"
+function getRandomBMP(min: number, max: number){
   var bpm = Math.random();
 
   return Math.floor(bpm * ((max - min + 1) + min)); // +1 makes it inclusive ; + min bumps math.random from 1 to the min value
@@ -19,25 +20,38 @@ function getRandomBMP(min: number, max: number){ //cannot declare as int, all in
 var bpm = getRandomBMP(bpmMin, bmpMax);
 
 
-function buzzBuzz(){
-  return bpm;
+const triggerBuzz = async () => {
+  try {
+    //notificationAsyc is specfic haptic feedback for status changes like bpm vs impactAsyc more for buttons/scrolling
+    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning); // warning should happen if bmp out of optimal range
+    //await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    console.log("Haptic engine succeed!")  
 
+  } catch (error) {
+    console.log("Haptic engine failed: ", error)
+  }
+};
+
+function buzzBuzz() {
+  if (bpm > 100 || bpm < 60) {
+    triggerBuzz();
+  }
 }
 
 export function useHeartBeat() {
   const [beat, setBeat] = useState(bpm);
-  //const timer = setTimeout(() => )
-
-  //changed beat + 1 to a random number between 60 and 100
-
 
   useEffect (() => {
     const beatTimer = setTimeout(() => {
-      setBeat(( getRandomBMP(55, 115))); //sets heartbeat to a random number between 60-125 inclusive
+      setBeat(( getRandomBMP(bpmMin, bmpMax)));
     }, 1000);
+
+    buzzBuzz();
 
     return () => clearTimeout(beatTimer);
   }, [beat]);
+
+  //buzzBuzz();
 
   return {beat}
 }

@@ -6,10 +6,6 @@ import { useHeartBeat } from './src/hooks/heartBeat';
 
 
 export default function App() {
-  
-  //<View> is like <div>
-  //<Text> only way to get strings on a screen
-  //useEffect is like a constructor/destructor
 
   const { beat } = useHeartBeat();
   

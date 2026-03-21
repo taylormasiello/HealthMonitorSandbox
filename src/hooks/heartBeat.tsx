@@ -22,9 +22,7 @@ var bpm = getRandomBMP(bpmMin, bmpMax);
 
 const triggerBuzz = async () => {
   try {
-    //notificationAsyc is specfic haptic feedback for status changes like bpm vs impactAsyc more for buttons/scrolling
-    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning); // warning should happen if bmp out of optimal range
-    //await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+    await Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error); // changed to Error as Warning type was too subtle imo
     console.log("Haptic engine succeed!")  
 
   } catch (error) {

@@ -11,7 +11,7 @@ export default function App() {
   
   return (
     <View style={styles.container}>
-      <Text>Hello Taylor!</Text>
+      <Text>Hello Alex!</Text>
       <Text>My beats so far are: {beat}</Text>
     </View>
   );

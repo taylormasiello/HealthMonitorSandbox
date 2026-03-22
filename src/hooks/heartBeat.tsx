@@ -40,7 +40,7 @@ const triggerBuzz = async () => {
   }
 };
 
-export function setIsDanger (currentBpm: number) {
+export function isBPMDanger (currentBpm: number) { //don't use "set" as function names in react native as it's a signal for a state change not just a flag/boolean logic
   var inDangerZone = false
 
   if (currentBpm > 100 || currentBpm < 60) {
@@ -51,7 +51,7 @@ export function setIsDanger (currentBpm: number) {
 }
 
 const buzzBuzz = async (currentBpm: number) => {
-  if (setIsDanger(currentBpm)) {
+  if (isBPMDanger(currentBpm)) {
     await triggerBuzz();
  }
 };
@@ -67,8 +67,9 @@ export function useHeartBeat() {
   useEffect (() => {
     const beatTimer = setTimeout(() => { //keep logic inside setTimeout
       const nextBPM = getRandomBMP(bpmDangerMin, bmpDangerMax); //internal telemetry variable
-      //setIsDanger(nextBPM); //inDangerFlag
-      setDanger(setIsDanger(nextBPM)); //informs react danger state flag changed
+      const isDangerous = isBPMDanger(nextBPM); //readability refactor
+
+      setDanger(isDangerous); //informs react danger state flag changed
       setBeat(nextBPM); //informs react native beat state has changed
       buzzBuzz(nextBPM);
     }, 1000);

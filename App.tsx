@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, Switch } from 'react-native';
 import { useHeartBeat } from './src/hooks/heartBeat';
 import { styles } from './src/styles/theme';
-import { UserInputs  } from "./src/types"; //DangerLevel
+import { UserInputs, DangerLevel } from "./src/types"; //DangerLevel
 
 // DONT FORGET TO REMOVE COMMENTS AND CONSOLE LOGS AT THE END OF THE PROJECT !!!
 
@@ -37,7 +37,32 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
   
   const { beat, isDanger } = useHeartBeat(newInputs); //takes in updated from user inputs UserInputs obj
 
-  return (
+  //isDanger conditional styling logic; returns STYLE COLOR not dangerLevel
+  function checkDangerLevel(danger: DangerLevel){
+    if (danger === 'EMG'){
+      return styles.veryDangerRed;
+    }
+
+    if (danger === 'HIGH'){
+      return styles.dangerRed;
+    } else if (danger === 'NONE'){
+      return styles.normalGreen;
+    }
+
+    return styles.normalGreen;
+  }
+
+  //"as DangerLevel" necessary to type gaurd dangerCheck to prevent string vs DangerLevel obj conflicts
+  //^"as" operator explicitly tells compiler result of parenthesis is to be treated AS the obj, DangerLevel
+  //^^forces dangerCheck to match necessary arg type required by checkDangerLevel
+  const dangerCheck: DangerLevel = (isDanger || 'NONE') as DangerLevel;   //'NONE' default for first render
+  
+  
+  //const test = isDanger;
+  //const testing: DangerLevel = (isDanger ? isDanger : 'NONE');
+  //const testing: DangerLevel = (isDanger || 'NONE') as DangerLevel;
+
+  return ( 
     <View style={styles.mainContainer}>
       <Text style={styles.bigTitleBlue}>Tay's Heart Beat Monitor</Text>
       <Text style={styles.medTitlePurple}>Hello {user}!</Text>
@@ -52,13 +77,36 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
       </View>
 
       <Text style={styles.smallTitleDarkYellow}>My beats so far are:</Text>
-      <Text style={[styles.normalGreen, isDanger && styles.dangerRed]}>{beat}</Text>
-      {isDanger ? <Text style={styles.warningOrange}>!! Warning!!</Text> : null}
+      <Text style={checkDangerLevel((dangerCheck))}>{beat}</Text>
+      
+      {(isDanger === 'EMG') ? <Text style={styles.warningOrange}>!! Warning!!</Text> : null}
     </View>
   );
 };
 
+// if EMG => verydangerred
+
+  // function checkIsDanger(isDanger){
+  //   if (isDanger === 'EMG'){
+  //     return isDanger;
+  //   }
+
+  //   if (isDanger === 'HIGH'){
+  //     return isDanger;
+  //   } else if (isDanger === 'NONE'){
+  //     return isDanger;
+  //   }
+
+  //   return 'NONE';
+  // }
+
+//{isDanger ? <Text style={styles.warningOrange}>!! Warning!!</Text> : null}
 //<Text style={[styles.normalGreen, isDanger && styles.dangerRed]}>{beat}</Text>
 //<Text style={[isDanger ? styles.warningOrange : null]}>!! Warning!!</Text>
 //<Text style={[isDanger ? styles.warningOrange : null]}>!! Warning!!</Text>
 //<Text style={[styles.invisible, isDanger && styles.warningOrange]}>!! Warning!!</Text>
+
+
+    //<Text style={[(styles.normalGreen, isDanger && styles.dangerRed) || (styles.veryDangerRed, (DangerLevel='EMG'))]}>{beat}</Text> */
+
+      //<Text style={[(isDanger === 'NONE') ? styles.normalGreen : (((isDanger === 'HIGH') ? styles.dangerRed) : (isDanger === 'EMG') ? styles.veryDangerRed : styles.normalGreen))]}>{beat}</Text>*/

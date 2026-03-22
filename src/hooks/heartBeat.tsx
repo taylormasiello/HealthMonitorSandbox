@@ -20,6 +20,8 @@ import * as Haptics from 'expo-haptics';
 const isAthlete = false
 const isExercising = false
 
+var isDanger = false
+
 const bpmDangerMin = 35
 const bmpDangerMax = 195
 
@@ -27,9 +29,6 @@ function getRandomBMP(min: number, max: number){
   var bpm = Math.random();
   return Math.floor(bpm * ((max - min + 1)) + min); // +1 makes it inclusive ; + min bumps math.random from 1 to the min value
 }
-
-//bug fix: was causing split logic; 2 bpm values instead of 1 source of truth (all now in useEffect correctly)
-//var bpm = getRandomBMP(bpmDangerMin, bmpDangerMax);
 
 const delay = (ms: number) => new Promise((finished) => setTimeout(finished, ms)); //allows for system hardware recovery between bpm's
 
@@ -45,9 +44,12 @@ const triggerBuzz = async () => {
 
 const buzzBuzz = async (currentBpm: number) => {
   if (currentBpm > 100 || currentBpm < 60) {
+    isDanger = true;
     await triggerBuzz();
     // red stylinging   
- } 
+ } else {
+    isDanger = false;
+ }
 };
 
 
@@ -62,9 +64,9 @@ export function useHeartBeat() {
     buzzBuzz(beat);
 
     return () => clearTimeout(beatTimer);
-  }, [beat]); // final array is dependancy array; when beat happens useEffect fires again; [beat] acts like an Interrupt Service Routine
+  }, [beat, isDanger]);
 
   //buzzBuzz();
 
-  return {beat}
+  return {beat, isDanger}
 }

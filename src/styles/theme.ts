@@ -15,8 +15,8 @@ export const styles = StyleSheet.create({
     fontSize: 30,
     gap: 20,
   },
-  medTitleGreen: {
-    color: '#217b19',
+  medTitlePurple: {
+    color: '#710e71',
     fontWeight: 'bold',
     fontSize: 25,
   },
@@ -25,9 +25,16 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 28,
   },
+  normalGreen: {
+    color: '#2c7113',
+    fontWeight: 'bold',
+    fontSize: 100,
+  },
   dangerRed: {
     color: '#f51212',
     fontWeight: 'bold',
     fontSize: 100,
   },
 });
+
+//style={[styles.baseText, isDanger && styles.redText, isAthlete && styles.athleteOverride]}

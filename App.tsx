@@ -1,15 +1,19 @@
+
+// **future considerations**:
+// add pop up modal if user bpm enters "high but ok if exercising" range to prompt them to confirm if exercising or no
+// dark mode
+// add age considerations for isExercising (changes based on age range)
+// ??? add button to "mute warnings"/haptics
+// updating isAthlete / isExercising logic to useContext for Gloabl scope (if needed for scalability)
+
+// DONT FORGET TO REMOVE COMMENTS AND CONSOLE LOGS AT THE END OF THE PROJECT !!!
+
 import React, { useState } from 'react';
 import { Text, View, Switch } from 'react-native';
 import { useHeartBeat } from './src/hooks/heartBeat';
 import { styles } from './src/styles/theme';
 import { UserInputs, DangerLevel } from "./src/types"; //DangerLevel
 
-// DONT FORGET TO REMOVE COMMENTS AND CONSOLE LOGS AT THE END OF THE PROJECT !!!
-
-// "warning !!" will be made dynamic ; only displays when "high danger"
-// user name input, TextInput 
-
-//export default function App() {
 export default function App(inputs: UserInputs) { //inputs are from user inputs (before new change that may happen within this function)
   //init states for isAthlete and isExercising for user input to update
   
@@ -21,7 +25,6 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
   
   //text box input to update this string variable !
   let user = "Alex";
-  //text box input to update this string variable !
 
   const [isAthlete, setIsAthlete] = useState<boolean>(inputUpdate.isAthlete); //need <boolean> for setters w/ arrow function below
   const [isExercising, setIsExercising] = useState<boolean>(inputUpdate.isExercising);
@@ -57,11 +60,6 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
   //^^forces dangerCheck to match necessary arg type required by checkDangerLevel
   const dangerCheck: DangerLevel = (isDanger || 'NONE') as DangerLevel;   //'NONE' default for first render
   
-  
-  //const test = isDanger;
-  //const testing: DangerLevel = (isDanger ? isDanger : 'NONE');
-  //const testing: DangerLevel = (isDanger || 'NONE') as DangerLevel;
-
   return ( 
     <View style={styles.mainContainer}>
       <Text style={styles.bigTitleBlue}>Tay's Heart Beat Monitor</Text>
@@ -83,30 +81,3 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
     </View>
   );
 };
-
-// if EMG => verydangerred
-
-  // function checkIsDanger(isDanger){
-  //   if (isDanger === 'EMG'){
-  //     return isDanger;
-  //   }
-
-  //   if (isDanger === 'HIGH'){
-  //     return isDanger;
-  //   } else if (isDanger === 'NONE'){
-  //     return isDanger;
-  //   }
-
-  //   return 'NONE';
-  // }
-
-//{isDanger ? <Text style={styles.warningOrange}>!! Warning!!</Text> : null}
-//<Text style={[styles.normalGreen, isDanger && styles.dangerRed]}>{beat}</Text>
-//<Text style={[isDanger ? styles.warningOrange : null]}>!! Warning!!</Text>
-//<Text style={[isDanger ? styles.warningOrange : null]}>!! Warning!!</Text>
-//<Text style={[styles.invisible, isDanger && styles.warningOrange]}>!! Warning!!</Text>
-
-
-    //<Text style={[(styles.normalGreen, isDanger && styles.dangerRed) || (styles.veryDangerRed, (DangerLevel='EMG'))]}>{beat}</Text> */
-
-      //<Text style={[(isDanger === 'NONE') ? styles.normalGreen : (((isDanger === 'HIGH') ? styles.dangerRed) : (isDanger === 'EMG') ? styles.veryDangerRed : styles.normalGreen))]}>{beat}</Text>*/

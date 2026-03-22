@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 100,
   },
-  veryDangerRed: { //for use when isAthelte and isExercise both false but within those ranges ?
+  veryDangerRed: {
     color: '#cf0707',
     fontWeight: 'bold',
     fontSize: 100,

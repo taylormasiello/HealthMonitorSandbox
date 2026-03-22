@@ -16,8 +16,9 @@ export default function App() {
     <View style={styles.mainContainer}>
       <Text style={styles.bigTitleBlue}>Tay's Heart Beat Monitor</Text>
       <Text style={styles.medTitlePurple}>Hello Alex!</Text>
-      <Text style={styles.smallTitleOrange}>My beats so far are:</Text>
+      <Text style={styles.smallTitleDarkYellow}>My beats so far are:</Text>
       <Text style={[styles.normalGreen, isDanger && styles.dangerRed]}>{beat}</Text>
+      <Text style={styles.warningOrange}>!! Warning !!</Text> {/*will be dynamic*/}
     </View>
   );
 }

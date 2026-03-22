@@ -23,10 +23,10 @@ export default function App() {
       <Text style={styles.bigTitleBlue}>Tay's Heart Beat Monitor</Text>
       <Text style={styles.medTitlePurple}>Hello {user}!</Text>
 
-      <View nativeID="userInputAthlete">"Check if you're an Athlete:
+      <View>"Check if you're an Athlete:
         <Switch onValueChange={toggleIsAthlete} value={isAthelte}/>
       </View>
-        <View ref="userInputExercising">Check if you're currently Exercising: 
+        <View>Check if you're currently Exercising: 
           <Switch onValueChange={toggleIsExercising} value={isExercising}/>
       </View>
 

@@ -9,62 +9,33 @@ import { UserInputs  } from "./src/types"; //DangerLevel
 // "warning !!" will be made dynamic ; only displays when "high danger"
 // user name input, TextInput 
 
-// function toggleUserInputs(inputs: UserInputs){
-//   // const isAthelte = inputs.isAthlete;
-//   // const isExercising = inputs.isExercising;
-
-//   // const [isAthlete, setIsAthlete] = useState(inputs.isAthlete);
-//   // const [isExercising, setIsExercising] = useState(inputs.isExercising);
-
-//   const toggleIsAthlete = () => setIsAthlete(previousState => !previousState);
-//   const toggleIsExercising = () => setIsExercising(previousState => !previousState);
-// }
-
 //export default function App() {
-export default function App(inputs: UserInputs) {
-  //maybe not? - init states for isAthlete and isExercising for user input
-  // const [isAthelte, setIsAthlete] = useState(false);
-  // const [isExercising, setIsExercising] = useState(false);
-
-  // const isAthelte = inputs.isAthlete;
-  // const isExercising = inputs.isExercising;
-
-    var inputUpdate: UserInputs = {
+export default function App(inputs: UserInputs) { //inputs are from user inputs (before new change that may happen within this function)
+  //init states for isAthlete and isExercising for user input to update
+  
+  //"default" inputObj from inputs arg
+  var inputUpdate: UserInputs = {
     isAthlete: inputs.isAthlete,
     isExercising: inputs.isExercising,
   }
-
-  // const toggleIsAthlete = () => setIsAthlete(previousState => !previousState);
-  // const toggleIsExercising = () => setIsExercising(previousState => !previousState);
-
+  
+  //text box input to update this string variable !
   let user = "Alex";
+  //text box input to update this string variable !
 
   const [isAthlete, setIsAthlete] = useState<boolean>(inputUpdate.isAthlete); //need <boolean> for setters w/ arrow function below
   const [isExercising, setIsExercising] = useState<boolean>(inputUpdate.isExercising);
 
-  // const toggleIsAthlete = () => setIsAthlete(isAthlete.previousState => !isAthlete.previousState);
-  // const toggleIsExercising = () => setIsExercising(isExercising.previousState => !isExercising.previousState);
+  const toggleIsAthlete = () => setIsAthlete(previousState => !previousState); //prevState needs to know what type it is;
+  const toggleIsExercising = () => setIsExercising(previousState => !previousState); //^why <boolean> in above setter
 
-  const toggleIsAthlete = () => setIsAthlete(previousState => !previousState);//prevState needs to know what type it is; why <boolean> in above setter
-  const toggleIsExercising = () => setIsExercising(previousState => !previousState);
-
-      var newInputs: UserInputs = {
-    isAthlete: isAthlete, //updated values from userInput toggles/checkbox clicking
+  //updated inputObj from user inputs from checkbox toggles
+  var newInputs: UserInputs = {
+    isAthlete: isAthlete, //updated values from userInput toggles/checkbox clicking/changing the values of the checkboxes
     isExercising: isExercising,
   }
   
-  const { beat, isDanger } = useHeartBeat(newInputs); //needs UserInputs obj
-
-
-
-  //const { beat, inputs: UserInputs } = useHeartBeat(inputs);
-  // const [isAthelte, setIsAthlete] = useState(false);
-  // const [isExercising, setIsExercising] = useState(false);
- 
-  //const toggleIsAthlete = () => setIsAthlete(previousState => !previousState);
-  //const toggleIsExercising = () => setIsExercising(previousState => !previousState);
-  //<Switch onValueChange={toggleIsAthlete => ()} value={isAthlete}/>
-
+  const { beat, isDanger } = useHeartBeat(newInputs); //takes in updated from user inputs UserInputs obj
 
   return (
     <View style={styles.mainContainer}>
@@ -82,9 +53,12 @@ export default function App(inputs: UserInputs) {
 
       <Text style={styles.smallTitleDarkYellow}>My beats so far are:</Text>
       <Text style={[styles.normalGreen, isDanger && styles.dangerRed]}>{beat}</Text>
-      <Text style={styles.warningOrange}>!! Warning!!</Text>
+      {isDanger ? <Text style={styles.warningOrange}>!! Warning!!</Text> : null}
     </View>
   );
 };
 
-
+//<Text style={[styles.normalGreen, isDanger && styles.dangerRed]}>{beat}</Text>
+//<Text style={[isDanger ? styles.warningOrange : null]}>!! Warning!!</Text>
+//<Text style={[isDanger ? styles.warningOrange : null]}>!! Warning!!</Text>
+//<Text style={[styles.invisible, isDanger && styles.warningOrange]}>!! Warning!!</Text>

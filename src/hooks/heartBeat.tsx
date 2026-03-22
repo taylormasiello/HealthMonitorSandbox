@@ -18,8 +18,8 @@ export function useHeartBeat(inputs: UserInputs) { //inputs needs to be passed i
   const [beat, setBeat] = useState(70);
   const [ isDanger, setDanger ] = useState('NONE'); //default value
 
-  const isAthlete = inputs.isAthlete;
-  const isExercising = inputs.isExercising;
+  // const isAthlete = inputs.isAthlete;
+  // const isExercising = inputs.isExercising;
 
    useEffect (() => { //updates every render except w/ dependancy array
     const beatTimer = setTimeout(() => { //keep logic inside setTimeout

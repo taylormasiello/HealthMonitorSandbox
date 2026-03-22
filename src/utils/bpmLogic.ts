@@ -17,9 +17,7 @@ export function getRandomBMP(min: number, max: number){
   return Math.floor(bpm * ((max - min + 1)) + min); // +1 makes it inclusive ; + min bumps math.random from 1 to the min value
 }
 
-//refactor to accept obj like {isAthlete: boolean}
 export function isBPMDanger (currentBpm: number, inputs: UserInputs) { //isAthlete is in UserInputs ; declaration
-  
   let dangerLevel: DangerLevel = 'NONE';
 
   let isAthlete = inputs.isAthlete;
@@ -28,32 +26,21 @@ export function isBPMDanger (currentBpm: number, inputs: UserInputs) { //isAthle
   let udrAthFl = (currentBpm < bpmAthleteFloor );
   let udrExCeil = (currentBpm < bmpExerciseCeil);
   let udrNomFl = (currentBpm < bpmNominalFloor);
-  let udrNomCeil = (currentBpm < bpmNominalCeil);
+  //let udrNomCeil = (currentBpm < bpmNominalCeil);
 
   let ovrNomCeil = (currentBpm > bpmNominalCeil);
   let ovrAthFl = (currentBpm > bpmAthleteFloor);
-
-  //let athelteExercisingEMG = ((isAthlete || isExercising) && (currentBpm < bmpExerciseCeil || currentBpm < bpmAthleteFloor));
-  //let athelteRestEMG = ((isAthlete && !isExercising) && (currentBpm < bpmNominalCeil || currentBpm < bpmAthleteFloor  /*overAthFl*/));
-  //let nonAthelteExercisingEMG = ((!isAthlete && isExercising) && (currentBpm < bmpExerciseCeil /*overExCeil*/ || currentBpm < bpmNominalFloor /*overNomFl*/));
-  //let nonAthleteRestEMG = ((!isAthlete && !isExercising) && (currentBpm < bpmNominalCeil /*overNomCeil*/ || currentBpm < bpmNominalFloor));
+  let ovrExCeil = (currentBpm > bmpExerciseCeil);
  
-  let athelteExercisingEMG = ((isAthlete || isExercising) && (udrExCeil || udrAthFl));
-  let athelteRestEMG = ((isAthlete && !isExercising) && (udrNomCeil || udrAthFl));
-  let nonAthelteExercisingEMG = ((!isAthlete && isExercising) && (udrExCeil || udrNomFl));
-  let nonAthleteRestEMG = ((!isAthlete && !isExercising) && (udrNomCeil || udrNomFl));
+  let athelteExercisingEMG = ((isAthlete || isExercising) && (ovrExCeil || udrAthFl));
+  let athelteRestEMG = ((isAthlete && !isExercising) && (ovrNomCeil || udrAthFl));
+  let nonAthelteExercisingEMG = ((!isAthlete && isExercising) && (ovrExCeil || udrNomFl));
+  let nonAthleteRestEMG = ((!isAthlete && !isExercising) && (ovrNomCeil || udrNomFl));
 
   if (athelteExercisingEMG || athelteRestEMG || nonAthelteExercisingEMG || nonAthleteRestEMG) {
-    dangerLevel = 'EMG';
+    dangerLevel = 'EMG'; //high priority
+    return dangerLevel;
   }
-  
-  //let ovrNomCeil = (currentBpm > bpmNominalCeil);
-
-//   if ((currentBpm > bpmNominalCeil && currentBpm < bmpExerciseCeil && isExercising) || 
-//         (currentBpm < bpmNominalFloor && currentBpm > bpmAthleteFloor && isAthlete)) {
-//      dangerLevel = 'HIGH'; //med priority
-//      return dangerLevel;
-//   }
 
   if ((ovrNomCeil && udrExCeil && isExercising) || (udrNomFl && ovrAthFl && isAthlete)) {
      dangerLevel = 'HIGH'; //med priority
@@ -61,9 +48,8 @@ export function isBPMDanger (currentBpm: number, inputs: UserInputs) { //isAthle
   }
 
   if ((currentBpm <= bpmNominalCeil) && (currentBpm >= bpmNominalFloor)) {
-      return dangerLevel = 'NONE'; //lowest priority
+      return dangerLevel = 'NONE'; //low priority
   }
 
-  return 'NONE'; //default return if there is some error; catch block
-
+  return 'NONE'; //default return ; catch block
 }

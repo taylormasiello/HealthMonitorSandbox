@@ -3,9 +3,6 @@ import { getRandomBMP, isBPMDanger, bpmDangerFloor, bpmDangerCeil } from '../uti
 import { buzzBuzz } from '../services/hapticsService';
 import { UserInputs  } from "../types"; //DangerLevel
 
-// const isAthlete = false
-// const isExercising = false
-
 // future considerations:
 // add isAthelte/isExercising checkboxes (for specific threshold logic)
 // input space to update "user" in App.tsx via user input (can set name on screen)
@@ -24,10 +21,9 @@ export function useHeartBeat(inputs: UserInputs) { //inputs needs to be passed i
   const isAthlete = inputs.isAthlete;
   const isExercising = inputs.isExercising;
 
-   useEffect (() => { //"constructor" ; updates every render except w/ dependancy array: empty runs once on mount ; with props: runs on mount and when props state change between renders
+   useEffect (() => { //updates every render except w/ dependancy array
     const beatTimer = setTimeout(() => { //keep logic inside setTimeout
       const nextBPM = getRandomBMP(bpmDangerFloor, bpmDangerCeil); //internal telemetry variable
-      //const UserInputs: inputs = 
       const isDangerous = isBPMDanger(nextBPM, inputs); 
 
       setDanger(isDangerous); //danger state changed

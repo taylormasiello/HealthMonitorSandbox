@@ -1,7 +1,7 @@
 import {useState, useEffect } from 'react';
 import { getRandomBMP, isBPMDanger, bmpDangerFloor, bpmDangerCeil } from '../utils/bpmLogic';
 import { buzzBuzz } from '../services/hapticsService';
-import { DangerLevel  } from "../types";
+import { DangerLevel, UserInputs  } from "../types";
 
 const isAthlete = false
 const isExercising = false
@@ -21,7 +21,8 @@ export function useHeartBeat() {
    useEffect (() => { //"constructor" ; updates every render except w/ dependancy array: empty runs once on mount ; with props: runs on mount and when props state change between renders
     const beatTimer = setTimeout(() => { //keep logic inside setTimeout
       const nextBPM = getRandomBMP(bmpDangerFloor, bpmDangerCeil); //internal telemetry variable
-      const isDangerous = isBPMDanger(nextBPM, DangerLevel); 
+      //const UserInputs: inputs = 
+      const isDangerous = isBPMDanger(nextBPM, inputs: UserInputs); 
 
       setDanger(isDangerous); //danger state changed
       setBeat(nextBPM); //beat state changed

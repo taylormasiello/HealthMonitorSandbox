@@ -1,14 +1,14 @@
 //"math logic" file
 import { DangerLevel, UserInputs  } from "../types";
 
-export const bpmNominalFloor = 60;
-export const bpmNominalCeil = 100;
-
 export const bpmDangerCeil = 35;
 export const bmpDangerFloor = 195;
 
-export const bpmAthleteMin = 40;
-export const bmpExerciseMax = 150; 
+const bpmNominalFloor = 60;
+const bpmNominalCeil = 100;
+
+const bpmAthleteMin = 40;
+const bmpExerciseMax = 150; 
 //^more or less an "avg" for "highest safe bpm during exercise" for folks around 40-45 years old
 //^^an estimaged average point of potential users, given app is a "health monitor"; less likely to be used by younger users
 

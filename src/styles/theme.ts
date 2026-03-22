@@ -13,15 +13,23 @@ import { StyleSheet } from 'react-native';
 //  style={styles.container}
 
 export const styles = StyleSheet.create({
-  container: {
-    marginTop: 50,
+  mainContainer: {
+    marginTop: 250,
+    marginLeft: 50,
   },
-  bigBlue: {
+  bigTitleBlack: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 28,
+  },
+  smallTitleBlue: {
     color: 'blue',
     fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 25,
   },
-  red: {
+  dangerRed: {
     color: 'red',
+    fontWeight: 'bold',
+    fontSize: 30,
   },
 });

@@ -10,9 +10,10 @@ export default function App() {
   const { beat } = useHeartBeat();
   
   return (
-    <View style={Theme.styles.container}>
-      <Text style={Theme.styles.bigBlue}>Hello Alex!</Text>
-      <Text style={Theme.styles.red}>My beats so far are: {beat}</Text>
+    <View style={Theme.styles.mainContainer}>
+      <Text style={Theme.styles.bigTitleBlack}>Tay's Heart Beat Monitor</Text>
+      <Text style={Theme.styles.smallTitleBlue}>Hello Alex!</Text>
+      <Text style={Theme.styles.dangerRed}>My beats so far are: {beat}</Text>
     </View>
   );
 }

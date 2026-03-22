@@ -31,7 +31,7 @@ function getRandomBMP(min: number, max: number){
 //bug fix: was causing split logic; 2 bpm values instead of 1 source of truth (all now in useEffect correctly)
 //var bpm = getRandomBMP(bpmDangerMin, bmpDangerMax);
 
-const delay = (ms: number) => new Promise((finished) => setTimeout(finished, ms)); //attempt to strengthen haptics
+const delay = (ms: number) => new Promise((finished) => setTimeout(finished, ms)); //allows for system hardware recovery between bpm's
 
 const triggerBuzz = async () => {
   try {

@@ -1,6 +1,6 @@
 //file contains expo haptics logic
-
 import { isBPMDanger } from '../utils/bpmLogic';
+import {  UserInputs, DangerLevel  } from "../types";
 import * as Haptics from 'expo-haptics';
 
 const delay = (ms: number) => new Promise((finished) => setTimeout(finished, ms)); //allows for system hardware recovery between bpm's
@@ -15,8 +15,17 @@ export const triggerBuzz = async () => {
   }
 };
 
-export const buzzBuzz = async (currentBpm: number) => {
-  if (isBPMDanger(currentBpm)) {
+export const buzzBuzz = async (currentBpm: number, inputs: UserInputs, danger: DangerLevel) => {
+  //danger = isBPMDanger(currentBpm, inputs)
+  //if (danger === 'EMG' || danger === 'HIGH')
+  if (danger === 'EMG')
+  {
     await triggerBuzz();
- }
+  }
 };
+
+//   if (isBPMDanger(currentBpm, inputs)) {
+//     await triggerBuzz();
+//  }
+
+

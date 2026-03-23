@@ -23,24 +23,35 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 28,
   },
-  normalGreen: {
+  smallTitleDarkGreen: {
+    color: '#2f9117',
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  nominalGreen: {
     color: '#2c7113',
     fontWeight: 'bold',
     fontSize: 100,
   },
-  dangerRed: {
+  emgBrightRed: {
     color: '#f10d0d',
     fontWeight: 'bold',
     fontSize: 100,
   },
-  veryDangerRed: {
+  warnDarkRed: {
     color: '#cf0707',
     fontWeight: 'bold',
-    fontSize: 100,
+    fontSize: 65,
   },
-  warningOrange: {
-    color: '#ff0000',
+  warnInvisible: {
+    color: '#ffffff00',
+    opacity: 0,
     fontWeight: 'bold',
-    fontSize: 63,
+    fontSize: 65,
+  },
+  cautionOrange: {
+    color: '#c74f1f',
+    fontWeight: 'bold',
+    fontSize: 100,
   },
 });

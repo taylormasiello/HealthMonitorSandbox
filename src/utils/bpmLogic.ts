@@ -1,5 +1,5 @@
 //"math logic" file
-import { DangerLevel, UserInputs  } from "../types";
+import { UserInputs, DangerLevel } from "../types";
 
 export const bpmDangerCeil = 35;
 export const bpmDangerFloor = 195;
@@ -17,13 +17,13 @@ export function getRandomBMP(min: number, max: number){
   return Math.floor(bpm * ((max - min + 1)) + min); // +1 makes it inclusive ; + min bumps math.random from 1 to the min value
 }
 
-//large scale isBPMDanger refactor makes it more "FDA audit ready"; refactored for readability + validation logic
-export function isBPMDanger (currentBpm: number, inputs: UserInputs) { //isAthlete is in UserInputs ; declaration
-  let dangerLevel: DangerLevel = 'NONE'; //let as will be reassigned within this scope
-  const isAthlete = inputs.isAthlete; //const "read only"; deconstructed from inputs
-  const isExercising = inputs.isExercising; //^same
+//isBPMDanger refactor makes it more "FDA audit ready"; refactored for readability + validation logic
+export function isBPMDanger (currentBpm: number, inputs: UserInputs) {
+  let dangerLevel: DangerLevel = 'NONE';
+  const isAthlete = inputs.isAthlete;
+  const isExercising = inputs.isExercising;
 
-  //updated bool's to const as they are "read only" in this scope; avoids "logic drift"
+  //bools allow for better readability and debugging
   const udrAthFl = (currentBpm < bpmAthleteFloor );
   const udrExCeil = (currentBpm < bpmExerciseCeil );
   const udrNomFl = (currentBpm < bpmNominalFloor);
@@ -32,24 +32,29 @@ export function isBPMDanger (currentBpm: number, inputs: UserInputs) { //isAthle
   const ovrExCeil = (currentBpm > bpmExerciseCeil);
   const ovrNomCeil = (currentBpm > bpmNominalCeil);
  
-  const athelteExercisingEMG = ((isAthlete || isExercising) && (ovrExCeil || udrAthFl));
-  const athelteRestEMG = ((isAthlete && !isExercising) && (ovrNomCeil || udrAthFl));
-  const nonAthelteExercisingEMG = ((!isAthlete && isExercising) && (ovrExCeil || udrNomFl));
+  //if nonAthleteNotExcercising, DangerLevel should be NONE
+  //Athletes' safe bpms can be lower, Exercising safe bpm can be higher
+  //^HIGH range specifically to trigger only for Athletes or while Exercising
+  //^^^if athlete bpm < nom but safe for athelte || exercising bpm > nom but safe when exercising; DangerLevel HIGH
+  const athleteExercisingEMG = ((isAthlete || isExercising) && (ovrExCeil || udrAthFl));
+  const athleteRestEMG = ((isAthlete && !isExercising) && (ovrNomCeil || udrAthFl));
+  const nonAthleteExercisingEMG = ((!isAthlete && isExercising) && (ovrExCeil || udrNomFl));
   const nonAthleteRestEMG = ((!isAthlete && !isExercising) && (ovrNomCeil || udrNomFl));
 
-  if (athelteExercisingEMG || athelteRestEMG || nonAthelteExercisingEMG || nonAthleteRestEMG) {
-    dangerLevel = 'EMG'; //high priority
+  if (athleteExercisingEMG || athleteRestEMG || nonAthleteExercisingEMG || nonAthleteRestEMG) {
+    dangerLevel = 'EMG';
     return dangerLevel;
   }
 
   if ((ovrNomCeil && udrExCeil && isExercising) || (udrNomFl && ovrAthFl && isAthlete)) {
-     dangerLevel = 'HIGH'; //med priority
+     dangerLevel = 'HIGH';
      return dangerLevel;
   }
 
+  //NONE is also default but for FDA level auditing, should have its own case logic
   if ((currentBpm <= bpmNominalCeil) && (currentBpm >= bpmNominalFloor)) {
-      return dangerLevel = 'NONE'; //low priority
+      return dangerLevel = 'NONE';
   }
 
-  return 'NONE'; //default return; catch block
+  return 'NONE'; // catch; if bpm not caught in EMG || HIGH, will be treated as NONE
 }

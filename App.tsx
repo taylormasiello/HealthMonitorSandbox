@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import { Text, View, Switch } from 'react-native';
 import { useHeartBeat } from './src/hooks/heartBeat';
 import { styles } from './src/styles/theme';
-import { UserInputs, DangerLevel } from "./src/types"; //DangerLevel
+import { DangerLevel, UserInputs } from "./src/types"; //DangerLevel
 
 export default function App(inputs: UserInputs) { //inputs are from user inputs (before new change that may happen within this function)
   //init states for isAthlete and isExercising for user input to update
@@ -43,16 +43,16 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
   //isDanger conditional styling logic; returns STYLE COLOR not dangerLevel
   function checkDangerLevel(danger: DangerLevel){
     if (danger === 'EMG'){
-      return styles.veryDangerRed;
+      return styles.emgBrightRed;
     }
 
     if (danger === 'HIGH'){
-      return styles.dangerRed;
+      return styles.cautionOrange;
     } else if (danger === 'NONE'){
-      return styles.normalGreen;
+      return styles.nominalGreen;
     }
 
-    return styles.normalGreen;
+    return styles.nominalGreen;
   }
 
   //"as DangerLevel" necessary to type gaurd dangerCheck to prevent string vs DangerLevel obj conflicts
@@ -60,24 +60,25 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
   //^^forces dangerCheck to match necessary arg type required by checkDangerLevel
   const dangerCheck: DangerLevel = (isDanger || 'NONE') as DangerLevel;   //'NONE' default for first render
   
-  return ( 
+  return ( //refeactored "warning" to be "invisible" instead of "destroyed" to fix "jumping UI" bug
     <View style={styles.mainContainer}>
       <Text style={styles.bigTitleBlue}>Tay's Heart Beat Monitor</Text>
       <Text style={styles.medTitlePurple}>Hello {user}!</Text>
 
       <View>
-        <Text>"Check if you're an Athlete:</Text>
+        <Text style={styles.smallTitleDarkGreen}>"Check if you're an Athlete:</Text>
         <Switch onValueChange={() => toggleIsAthlete()} value={isAthlete}/>
       </View>
         <View>
-          <Text>Check if you're currently Exercising:</Text>
+          <Text style={styles.smallTitleDarkGreen}>Check if you're currently Exercising:</Text>
           <Switch onValueChange={() => toggleIsExercising()} value={isExercising}/>
       </View>
 
       <Text style={styles.smallTitleDarkYellow}>My beats so far are:</Text>
       <Text style={checkDangerLevel((dangerCheck))}>{beat}</Text>
-      
-      {(isDanger === 'EMG') ? <Text style={styles.warningOrange}>!! Warning!!</Text> : null}
+      <Text style={(isDanger === 'EMG') ? styles.warnDarkRed : styles.warnInvisible}>"!! Warning !!"</Text>
     </View>
   );
 };
+
+//(isDanger === 'EMG') ? <Text style={styles.warnDarkRed}>!! Warning !!</Text> : null

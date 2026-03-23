@@ -16,7 +16,7 @@ export function useHeartBeat(inputs: UserInputs) { //inputs needs to be passed i
       setDanger(isDangerous); //danger state changed
       setBeat(nextBPM); //beat state changed
 
-      buzzBuzz(nextBPM); //dispatch haptic service
+      buzzBuzz(nextBPM, inputs, isDangerous); //dispatch haptic service
     }, 1000);
   
     return () => clearTimeout(beatTimer); //"deconstructor"

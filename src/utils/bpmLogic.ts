@@ -1,8 +1,8 @@
 //"math logic" file
 import { UserInputs, DangerLevel } from "../types";
 
-export const bpmDangerCeil = 35;
-export const bpmDangerFloor = 195;
+export const bpmDangerFloor = 35;  
+export const bpmDangerCeil = 195; 
 
 const bpmNominalFloor = 60;
 const bpmNominalCeil = 100;

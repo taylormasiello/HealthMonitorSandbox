@@ -26,7 +26,7 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
   //text box input to update this string variable !
   //let user = "Alex";
 
-  const [userName, setUserName] = useState('Alex');
+  const [userName, setUserName] = useState('Your Name?');
   const [isAthlete, setIsAthlete] = useState<boolean>(inputUpdate.isAthlete); //need <boolean> for setters w/ arrow function below
   const [isExercising, setIsExercising] = useState<boolean>(inputUpdate.isExercising);
 
@@ -63,26 +63,31 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
   
   return ( //refeactored "warning" to be "invisible" instead of "destroyed" to fix "jumping UI" bug
     <View style={styles.mainContainer}>
-      <Text style={styles.bigTitleBlue}>Tay's Heart Beat Monitor</Text>
-      <Text style={styles.medTitlePurple}>Hello 
+      <Text style={styles.bigTitleBlue}>Heart Beat Monitor</Text>
+      <Text style={{ fontStyle: 'italic', fontSize: 20 }}>(Hi Alex! :-D)</Text>
+    
+      <Text style={styles.bpmDarkYellow}>BPM Reading:</Text>
+      <Text style={checkDangerLevel((dangerCheck))}>{beat}</Text>
+      <Text style={(isDanger === 'EMG') ? styles.warnDarkRed : styles.warnInvisible}>!! Warning !!</Text>
+
+      <Text style={styles.helloPurple}>Hello!</Text>
+      
+      <View>
         <TextInput
-          style={styles.userNamePurple}
+          style={styles.userNameInput}
           onChangeText={setUserName}
           value={userName}
         />
-       !</Text>
-      <View>
-        <Text style={styles.smallTitleDarkGreen}>"Check if you're an Athlete:</Text>
-        <Switch onValueChange={() => toggleIsAthlete()} value={isAthlete}/>
-      </View>
-        <View>
-          <Text style={styles.smallTitleDarkGreen}>Check if you're currently Exercising:</Text>
-          <Switch onValueChange={() => toggleIsExercising()} value={isExercising}/>
       </View>
 
-      <Text style={styles.smallTitleDarkYellow}>My beats so far are:</Text>
-      <Text style={checkDangerLevel((dangerCheck))}>{beat}</Text>
-      <Text style={(isDanger === 'EMG') ? styles.warnDarkRed : styles.warnInvisible}>!! Warning !!</Text>
+      <View style={styles.toggleSwitches}>
+        <Text style={styles.toggleTitleDarkGreen}>Check if you're an Athlete:</Text>
+        <Switch onValueChange={() => toggleIsAthlete()} value={isAthlete}/>
+      </View>
+        <View style={styles.toggleSwitches}>
+          <Text style={styles.toggleTitleDarkGreen}>Check if you're currently Exercising:</Text>
+          <Switch onValueChange={() => toggleIsExercising()} value={isExercising}/>
+      </View>
     </View>
   );
 };
@@ -93,3 +98,8 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
           //onChangeText={setUserName}
           //value={userName}
       //>
+
+      
+      // <Text style={styles.smallTitleDarkYellow}>My beats so far are:</Text>
+      // <Text style={checkDangerLevel((dangerCheck))}>{beat}</Text>
+      // <Text style={(isDanger === 'EMG') ? styles.warnDarkRed : styles.warnInvisible}>!! Warning !!</Text>

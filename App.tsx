@@ -37,7 +37,7 @@ export default function App(inputs: UserInputs) { //inputs are from user inputs 
   const { beat, isDanger } = useHeartBeat(newInputs); //takes in updated from user inputs UserInputs
 
   //isDanger conditional styling logic; returns STYLE COLOR not dangerLevel
-  function checkDangerLevel(danger: DangerLevel){
+  function checkDangerLevel(danger: DangerLevel){ //rename to "colorDangerLevel"
     if (danger === 'EMG'){
       return styles.emgBrightRed;
     }

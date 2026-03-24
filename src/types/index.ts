@@ -2,7 +2,7 @@
 export type DangerLevel = 'NONE' | 'HIGH' | 'EMG';
 
 //Interfaces
-export interface UserInputs { //declaration
+export interface UserInputs {
     isAthlete: boolean;
     isExercising: boolean;
 }
